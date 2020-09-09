@@ -69,5 +69,14 @@ yuntest = {
 			jsDom.src = url;
 			document.querySelector('head').appendChild(jsDom);
     	}
+    },
+    'isDebug': function(){
+        if((window.outerHeight-window.innerHeight)>200){
+           return true;
+        };
+        if((window.outerWidth-window.innerWidth)>200){
+           return true;
+        };
+        return false;
     }
 };

